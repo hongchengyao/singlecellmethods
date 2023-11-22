@@ -1,3 +1,6 @@
+#' Perform weighted PCA
+#' 
+#' Note that this function would perform scaling with function `scaleDataWithStats`
 #' @export
 weighted_pca <- function(X, weights, genes_use=NULL, npc=20, do_corr=TRUE, scale_thresh=10) {
     if (!identical(length(weights), ncol(X))) {
@@ -49,7 +52,11 @@ weighted_pca <- function(X, weights, genes_use=NULL, npc=20, do_corr=TRUE, scale
 }
 
 
-## Wrapper to Seurat objects
+#' Wrapper to Seurat objects
+#' Note that this function use the `data` slot of the seurat object, which 
+#' usually stores the normalized data, and the `weighted_pca` function would 
+#' perform scaling itself. While the `scale.data` slot of seurat object would 
+#' be left untouched
 #' @export
 RunBalancedPCA <- function(obj, weight.by='orig.ident', npcs=20, assay.use='RNA', reduction.name = "pca", reduction.key = "PC_") {
     if (!weight.by %in% colnames(obj@meta.data)) 
